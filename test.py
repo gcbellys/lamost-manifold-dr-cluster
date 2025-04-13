@@ -19,11 +19,11 @@ try:
 except ImportError:
     print("NumPy 未安装")
 
-try:
-    import tensorflow as tf
-    print(f"\nTensorFlow 版本: {tf.__version__}")
-except ImportError:
-    print("TensorFlow 未安装")
+# try:
+#     import tensorflow as tf
+#     print(f"\nTensorFlow 版本: {tf.__version__}")
+# except ImportError:
+#     print("TensorFlow 未安装")
 
 try:
     import keras
