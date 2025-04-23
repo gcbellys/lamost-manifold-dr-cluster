@@ -1,0 +1,43 @@
+PCA降维结果说明文档
+==================================================
+
+1. 输出文件说明
+------------------------------
+主文件: /home/lamost-manifold-dr-cluster/data/processed/reduced_features.csv
+PCA信息文件: /home/lamost-manifold-dr-cluster/data/processed/reduced_features_pca_info.csv
+说明文档: /home/lamost-manifold-dr-cluster/data/processed/reduced_features_说明文档.txt
+
+2. 数据格式说明
+------------------------------
+2.1 主文件格式 (reduced_features.csv):
+   - 行: 每个样本（恒星光谱）
+   - 列: 
+     * obsid: 观测ID
+     * type: 恒星类型
+     * PC1-PC128: 主成分特征
+
+2.2 PCA信息文件格式 (reduced_features_pca_info.csv):
+   - 行: 每个主成分
+   - 列: 
+     * PC: 主成分编号
+     * Explained_Variance_Ratio: 该主成分解释的方差比例
+     * Cumulative_Variance_Ratio: 累积方差解释比例
+
+3. 处理统计信息
+------------------------------
+原始特征维度: 5400
+降维后特征维度: 128
+保留的方差比例: 0.9500
+样本数量: 2744
+
+4. 使用说明
+------------------------------
+4.1 主文件 (reduced_features.csv):
+    - 用于后续机器学习任务
+    - 每行代表一个恒星光谱样本
+    - 前两列为标识信息，后续列为降维后的特征
+
+4.2 PCA信息文件 (reduced_features_pca_info.csv):
+    - 用于分析降维效果
+    - 可以查看每个主成分的重要性
+    - 帮助确定最优的主成分数量

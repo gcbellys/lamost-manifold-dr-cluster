@@ -1,0 +1,9 @@
+2025-04-24 00:49:04,375 - INFO - 正在读取文件: /home/lamost-manifold-dr-cluster/data/processed/feature_matrix.csv
+2025-04-24 00:49:10,143 - INFO - 正在进行标准化处理...
+2025-04-24 00:49:10,475 - INFO - 正在进行PCA降维...
+2025-04-24 00:49:54,338 - INFO - 原始特征维度: 5400
+2025-04-24 00:49:54,339 - INFO - 降维后特征维度: 128
+2025-04-24 00:49:54,339 - INFO - 保留的方差比例: 0.9500
+2025-04-24 00:49:55,372 - INFO - 降维后的数据已保存至: /home/lamost-manifold-dr-cluster/data/processed/reduced_features.csv
+2025-04-24 00:49:55,375 - INFO - PCA信息已保存至: /home/lamost-manifold-dr-cluster/data/processed/reduced_features_pca_info.csv
+2025-04-24 00:49:55,376 - INFO - 说明文档已生成: /home/lamost-manifold-dr-cluster/data/processed/reduced_features_说明文档.txt

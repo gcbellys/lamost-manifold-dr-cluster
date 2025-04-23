@@ -6,6 +6,7 @@ from pathlib import Path
 import logging
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
 # 设置日志
 logging.basicConfig(level=logging.INFO)
@@ -103,14 +104,54 @@ def process_spectra_noise(input_file, output_file, threshold_ratio=0.2):
     
     # 按恒星类型统计
     logger.info("\n=== 按恒星类型统计 ===")
+    type_stats = {}
     for star_type in ['A', 'F', 'G']:
         type_mask = processed_df['type'] == star_type
         type_retention = retention_rates[type_mask]
+        type_stats[star_type] = {
+            'count': type_mask.sum(),
+            'mean_retention': type_retention.mean(),
+            'min_retention': type_retention.min(),
+            'max_retention': type_retention.max()
+        }
         logger.info(f"\n{star_type}型星:")
-        logger.info(f"光谱数量: {type_mask.sum()}")
-        logger.info(f"平均保留率: {type_retention.mean():.2f}%")
-        logger.info(f"最小保留率: {type_retention.min():.2f}%")
-        logger.info(f"最大保留率: {type_retention.max():.2f}%")
+        logger.info(f"光谱数量: {type_stats[star_type]['count']}")
+        logger.info(f"平均保留率: {type_stats[star_type]['mean_retention']:.2f}%")
+        logger.info(f"最小保留率: {type_stats[star_type]['min_retention']:.2f}%")
+        logger.info(f"最大保留率: {type_stats[star_type]['max_retention']:.2f}%")
+    
+    # 生成滤波信息文本文件
+    info_file = output_file.parent / 'noise_filter_info.txt'
+    with open(info_file, 'w', encoding='utf-8') as f:
+        f.write("=== 噪声滤波处理信息 ===\n")
+        f.write(f"处理时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"输入文件: {input_file}\n")
+        f.write(f"输出文件: {output_file}\n")
+        f.write(f"阈值比例: {threshold_ratio}\n\n")
+        
+        f.write("=== 总体统计 ===\n")
+        f.write(f"总光谱数量: {total_spectra}\n")
+        f.write(f"每个光谱的数据点数量: {total_points}\n")
+        f.write(f"总数据点数量: {total_data_points}\n")
+        f.write(f"移除的数据点数量: {removed_points}\n")
+        f.write(f"移除的数据点百分比: {removed_percentage:.2f}%\n")
+        f.write(f"保留的数据点百分比: {remaining_percentage:.2f}%\n\n")
+        
+        f.write("=== 光谱保留率统计 ===\n")
+        f.write(f"平均保留率: {retention_rates.mean():.2f}%\n")
+        f.write(f"最小保留率: {retention_rates.min():.2f}%\n")
+        f.write(f"最大保留率: {retention_rates.max():.2f}%\n\n")
+        
+        f.write("=== 按恒星类型统计 ===\n")
+        for star_type in ['A', 'F', 'G']:
+            stats = type_stats[star_type]
+            f.write(f"\n{star_type}型星:\n")
+            f.write(f"光谱数量: {stats['count']}\n")
+            f.write(f"平均保留率: {stats['mean_retention']:.2f}%\n")
+            f.write(f"最小保留率: {stats['min_retention']:.2f}%\n")
+            f.write(f"最大保留率: {stats['max_retention']:.2f}%\n")
+    
+    logger.info(f"\n滤波信息已保存到: {info_file}")
 
 def main():
     # 设置路径
